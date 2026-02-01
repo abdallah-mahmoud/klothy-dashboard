@@ -113,12 +113,7 @@
                   >
                     التفاصيل
                   </v-btn>
-                  <v-btn
-                    color="green"
-                    variant="tonal"
-                    size="small"
-                    icon="mdi-phone"
-                  ></v-btn>
+
                 </div>
               </v-card-text>
             </v-card>
