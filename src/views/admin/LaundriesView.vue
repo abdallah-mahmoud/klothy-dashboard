@@ -13,10 +13,45 @@
       </v-btn>
     </div>
 
-    <!-- Search and Filters -->
-    <v-card class="mb-4" elevation="1">
+    <!-- Stats Cards -->
+    <v-row class="mb-6">
+      <v-col cols="12" md="4">
+        <v-card elevation="0" border class="rounded-lg">
+          <v-card-text>
+            <div class="text-subtitle-2 text-grey mb-1">إجمالي المغاسل</div>
+            <div class="text-h4 font-weight-bold text-primary">{{ laundries.length }}</div>
+          </v-card-text>
+        </v-card>
+      </v-col>
+      <!-- Add more summary stats if needed -->
+    </v-row>
+
+    <!-- Filters & Search -->
+    <v-card class="mb-6" elevation="0" border>
       <v-card-text>
         <v-row>
+          <v-col cols="12" md="3">
+            <v-select
+              v-model="cityFilter"
+              :items="cityOptions"
+              label="المدينة"
+              density="compact"
+              variant="outlined"
+              hide-details
+              prepend-inner-icon="mdi-map-marker"
+            ></v-select>
+          </v-col>
+          <v-col cols="12" md="3">
+            <v-select
+              v-model="statusFilter"
+              :items="statusOptions"
+              label="حالة المغسلة"
+              density="compact"
+              variant="outlined"
+              hide-details
+              prepend-inner-icon="mdi-store-clock"
+            ></v-select>
+          </v-col>
           <v-col cols="12" md="6">
             <v-text-field
               v-model="searchQuery"
@@ -27,26 +62,6 @@
               hide-details
               clearable
             ></v-text-field>
-          </v-col>
-          <v-col cols="12" md="3">
-            <v-select
-              v-model="statusFilter"
-              :items="statusOptions"
-              label="حالة المغسلة"
-              variant="outlined"
-              density="compact"
-              hide-details
-            ></v-select>
-          </v-col>
-          <v-col cols="12" md="3">
-            <v-select
-              v-model="cityFilter"
-              :items="cityOptions"
-              label="المدينة"
-              variant="outlined"
-              density="compact"
-              hide-details
-            ></v-select>
           </v-col>
         </v-row>
       </v-card-text>
@@ -104,56 +119,51 @@
 
         <!-- Financials -->
         <template #item.financials="{ item }">
-          <div class="text-caption">
-            <div class="d-flex align-center justify-space-between mb-2">
-              <span class="text-primary font-weight-bold">
-                {{ formatCurrency(item.laundryRevenue) }}
-              </span>
+          <div class="financial-card pa-2 rounded-lg bg-grey-lighten-5 border">
+            <!-- Laundry Revenue -->
+            <div class="d-flex align-center justify-space-between mb-2 pb-2 border-b-dashed">
+              <div class="d-flex align-center">
+                <v-icon color="primary" size="small" class="ml-2">mdi-store</v-icon>
+                <span class="font-weight-black text-body-2">{{ formatCurrency(item.laundryRevenue) }}</span>
+              </div>
               <v-btn
                 v-if="item.laundryRevenue > 0"
-                size="small"
+                size="x-small"
                 color="primary"
                 variant="tonal"
-                prepend-icon="mdi-cash-check"
-                class="px-3"
+                class="px-2 font-weight-bold"
+                height="24"
                 @click="handleSettleLaundry(item)"
               >
                 سداد
               </v-btn>
-              <v-chip
-                v-else
-                color="success"
-                size="small"
-                variant="outlined"
-              >
-                <v-icon start size="14">mdi-check</v-icon>
+              <div v-else class="text-caption text-success font-weight-bold d-flex align-center">
+                <v-icon size="small" start>mdi-check</v-icon>
                 خالص
-              </v-chip>
+              </div>
             </div>
+
+            <!-- Driver Revenue -->
             <div class="d-flex align-center justify-space-between">
-              <span class="text-secondary font-weight-bold">
-                {{ formatCurrency(item.driverRevenue) }}
-              </span>
+              <div class="d-flex align-center">
+                <v-icon color="secondary" size="small" class="ml-2">mdi-moped</v-icon>
+                <span class="font-weight-black text-body-2">{{ formatCurrency(item.driverRevenue) }}</span>
+              </div>
               <v-btn
                 v-if="item.driverRevenue > 0"
-                size="small"
+                size="x-small"
                 color="secondary"
                 variant="tonal"
-                prepend-icon="mdi-cash-multiple"
-                class="px-3"
+                class="px-2 font-weight-bold"
+                height="24"
                 @click="handleSettleDrivers(item)"
               >
                 سداد
               </v-btn>
-               <v-chip
-                v-else
-                color="success"
-                size="small"
-                variant="outlined"
-              >
-                <v-icon start size="14">mdi-check</v-icon>
+              <div v-else class="text-caption text-success font-weight-bold d-flex align-center">
+                <v-icon size="small" start>mdi-check</v-icon>
                 خالص
-              </v-chip>
+              </div>
             </div>
           </div>
         </template>
@@ -304,3 +314,13 @@ function suspendLaundry(laundry: any) {
   // TODO: Show confirmation dialog
 }
 </script>
+
+<style scoped>
+.border-b-dashed {
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.12) !important;
+}
+
+.financial-card {
+  min-width: 200px;
+}
+</style>
