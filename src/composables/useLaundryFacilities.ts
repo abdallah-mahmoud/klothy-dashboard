@@ -7,7 +7,11 @@ export interface LaundryFacility {
     location: string
     city: string
     activeDrivers: number
+    activeDrivers: number
     totalOrders: number
+    completedOrders: number
+    laundryRevenue: number
+    driverRevenue: number
     coordinates?: {
         lat: number
         lng: number
@@ -22,7 +26,10 @@ const mockLaundries: LaundryFacility[] = [
         location: 'الرياض - حي النخيل',
         city: 'الرياض',
         activeDrivers: 2,
-        totalOrders: 245,
+        totalOrders: 200,
+        completedOrders: 180,
+        laundryRevenue: 2000,
+        driverRevenue: 900,
         coordinates: {
             lat: 24.7136,
             lng: 46.6753
@@ -34,7 +41,10 @@ const mockLaundries: LaundryFacility[] = [
         location: 'الرياض - حي الملز',
         city: 'الرياض',
         activeDrivers: 2,
-        totalOrders: 189,
+        totalOrders: 150,
+        completedOrders: 142,
+        laundryRevenue: 3500,
+        driverRevenue: 1200,
         coordinates: {
             lat: 24.6877,
             lng: 46.7219
@@ -46,7 +56,10 @@ const mockLaundries: LaundryFacility[] = [
         location: 'الرياض - حي العليا',
         city: 'الرياض',
         activeDrivers: 1,
-        totalOrders: 156,
+        totalOrders: 120,
+        completedOrders: 110,
+        laundryRevenue: 1800,
+        driverRevenue: 750,
         coordinates: {
             lat: 24.6945,
             lng: 46.6851

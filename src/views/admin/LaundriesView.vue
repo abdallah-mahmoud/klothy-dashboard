@@ -59,6 +59,7 @@
         :items="filteredLaundries"
         :search="searchQuery"
         :items-per-page="15"
+        :loading="loading"
         class="elevation-0"
       >
         <!-- Laundry Name -->
@@ -78,35 +79,40 @@
         <template #item.location="{ item }">
           <div>
             <div class="text-body-2">{{ item.city }}</div>
-            <div class="text-caption text-grey">{{ item.district }}</div>
+            <div class="text-caption text-grey">{{ item.location }}</div>
           </div>
         </template>
 
         <!-- Status -->
         <template #item.status="{ item }">
           <v-chip
-            :color="item.isOpen ? 'green' : 'grey'"
+            color="success"
             size="small"
           >
             <v-icon start size="12">mdi-circle</v-icon>
-            {{ item.isOpen ? 'مفتوح' : 'مغلق' }}
+            مفتوح
           </v-chip>
-        </template>
-
-        <!-- Rating -->
-        <template #item.rating="{ item }">
-          <div class="d-flex align-center">
-            <v-icon color="amber" size="16" class="ml-1">mdi-star</v-icon>
-            <span class="font-weight-bold">{{ item.rating }}</span>
-            <span class="text-caption text-grey mr-1">({{ item.reviewCount }})</span>
-          </div>
         </template>
 
         <!-- Stats -->
         <template #item.stats="{ item }">
           <div class="text-caption">
-            <div>طلبات نشطة: <strong>{{ item.activeOrders }}</strong></div>
-            <div class="text-grey">مكتمل: {{ item.completedOrders }}</div>
+            <div>طلبات: <strong>{{ item.totalOrders }}</strong></div>
+            <div class="text-grey">نشط: {{ item.activeDrivers }}</div>
+          </div>
+        </template>
+
+        <!-- Financials -->
+        <template #item.financials="{ item }">
+          <div class="text-caption">
+            <div class="text-primary mb-1">
+              <span class="font-weight-bold">المغسلة:</span>
+              {{ formatCurrency(item.laundryRevenue) }}
+            </div>
+            <div class="text-secondary">
+              <span class="font-weight-bold">المندوب:</span>
+              {{ formatCurrency(item.driverRevenue) }}
+            </div>
           </div>
         </template>
 
@@ -144,6 +150,9 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useLaundryFacilities } from '@/composables/useLaundryFacilities'
+
+const { laundries, loading } = useLaundryFacilities()
 
 const searchQuery = ref('')
 const statusFilter = ref('all')
@@ -165,84 +174,18 @@ const cityOptions = [
 const headers = [
   { title: 'المغسلة', key: 'name', align: 'start' as const },
   { title: 'الموقع', key: 'location', align: 'start' as const },
-  { title: 'رقم الهاتف', key: 'phone', align: 'start' as const },
   { title: 'الحالة', key: 'status', align: 'start' as const },
-  { title: 'التقييم', key: 'rating', align: 'start' as const },
   { title: 'الإحصائيات', key: 'stats', align: 'start' as const },
+  { title: 'المستحقات المالية', key: 'financials', align: 'start' as const },
   { title: 'الإجراءات', key: 'actions', sortable: false, align: 'center' as const },
 ]
-
-const laundries = ref([
-  {
-    id: 'L001',
-    name: 'مغسلة النظافة',
-    city: 'الرياض',
-    district: 'حي النخيل',
-    phone: '+966 11 234 5678',
-    isOpen: true,
-    rating: 4.8,
-    reviewCount: 145,
-    activeOrders: 12,
-    completedOrders: 234,
-  },
-  {
-    id: 'L002',
-    name: 'مغسلة الأناقة',
-    city: 'الرياض',
-    district: 'حي العليا',
-    phone: '+966 11 345 6789',
-    isOpen: true,
-    rating: 4.9,
-    reviewCount: 198,
-    activeOrders: 8,
-    completedOrders: 312,
-  },
-  {
-    id: 'L003',
-    name: 'مغسلة الفخامة',
-    city: 'الرياض',
-    district: 'حي الملز',
-    phone: '+966 11 456 7890',
-    isOpen: false,
-    rating: 4.7,
-    reviewCount: 123,
-    activeOrders: 0,
-    completedOrders: 189,
-  },
-  {
-    id: 'L004',
-    name: 'مغسلة السرعة',
-    city: 'جدة',
-    district: 'حي الروضة',
-    phone: '+966 12 567 8901',
-    isOpen: true,
-    rating: 4.6,
-    reviewCount: 87,
-    activeOrders: 15,
-    completedOrders: 156,
-  },
-  {
-    id: 'L005',
-    name: 'مغسلة الجودة',
-    city: 'جدة',
-    district: 'حي الزهراء',
-    phone: '+966 12 678 9012',
-    isOpen: true,
-    rating: 4.9,
-    reviewCount: 210,
-    activeOrders: 10,
-    completedOrders: 378,
-  },
-])
 
 const filteredLaundries = computed(() => {
   let result = laundries.value
 
-  // Filter by status
-  if (statusFilter.value === 'open') {
-    result = result.filter((l) => l.isOpen)
-  } else if (statusFilter.value === 'closed') {
-    result = result.filter((l) => !l.isOpen)
+  // Filter by status (mock implementation since store doesn't have open/close status yet)
+  if (statusFilter.value === 'closed') {
+    return []
   }
 
   // Filter by city
@@ -254,6 +197,14 @@ const filteredLaundries = computed(() => {
 
   return result
 })
+
+const formatCurrency = (amount: number) => {
+  return new Intl.NumberFormat('ar-SA', {
+    style: 'currency',
+    currency: 'SAR',
+    maximumFractionDigits: 0
+  }).format(amount)
+}
 
 function viewLaundry(laundry: any) {
   console.log('View laundry:', laundry.name)
