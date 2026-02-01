@@ -22,26 +22,30 @@
             <v-icon icon="mdi-star" size="small" color="warning" class="mr-2" />
             <span class="text-body-2">{{ driver.rating }}</span>
           </div>
-          <div class="mt-2 text-caption">
-            <span class="text-grey">مستحقات: </span>
-            <span class="font-weight-bold text-primary">{{ formatCurrency(driver.unpaidRevenue || 0) }}</span>
+          <div class="mt-2 d-flex align-center justify-space-between">
+            <div>
+              <span class="text-grey text-caption">المستحقات: </span>
+              <span class="font-weight-bold text-primary">{{ formatCurrency(driver.unpaidRevenue || 0) }}</span>
+            </div>
             <v-btn
               v-if="(driver.unpaidRevenue || 0) > 0"
-              size="x-small"
-              variant="text"
+              size="small"
+              variant="tonal"
               color="primary"
-              class="mr-2"
+              prepend-icon="mdi-cash-check"
               @click.stop="$emit('settle', driver)"
             >
-              (تسوية)
+              سداد
             </v-btn>
-            <v-icon
+            <v-chip
               v-else
-              icon="mdi-check-circle"
-              size="x-small"
               color="success"
-              class="mr-2"
-            />
+              size="x-small"
+              variant="flat"
+            >
+              <v-icon start size="12">mdi-check-circle</v-icon>
+              خالص
+            </v-chip>
           </div>
         </div>
       </div>

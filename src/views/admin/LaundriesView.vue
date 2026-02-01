@@ -105,26 +105,30 @@
         <!-- Financials -->
         <template #item.financials="{ item }">
           <div class="text-caption">
-            <div class="d-flex align-center justify-space-between mb-1">
+            <div class="d-flex align-center justify-space-between mb-2">
               <span class="text-primary font-weight-bold">
                 {{ formatCurrency(item.laundryRevenue) }}
               </span>
               <v-btn
                 v-if="item.laundryRevenue > 0"
-                size="x-small"
+                size="small"
                 color="primary"
-                variant="text"
-                class="px-1"
+                variant="tonal"
+                prepend-icon="mdi-cash-check"
+                class="px-3"
                 @click="handleSettleLaundry(item)"
               >
                 سداد
               </v-btn>
-              <v-icon
+              <v-chip
                 v-else
                 color="success"
                 size="small"
-                icon="mdi-check-circle"
-              ></v-icon>
+                variant="outlined"
+              >
+                <v-icon start size="14">mdi-check</v-icon>
+                خالص
+              </v-chip>
             </div>
             <div class="d-flex align-center justify-space-between">
               <span class="text-secondary font-weight-bold">
@@ -132,20 +136,24 @@
               </span>
               <v-btn
                 v-if="item.driverRevenue > 0"
-                size="x-small"
+                size="small"
                 color="secondary"
-                variant="text"
-                class="px-1"
+                variant="tonal"
+                prepend-icon="mdi-cash-multiple"
+                class="px-3"
                 @click="handleSettleDrivers(item)"
               >
                 سداد
               </v-btn>
-              <v-icon
+               <v-chip
                 v-else
                 color="success"
                 size="small"
-                icon="mdi-check-circle"
-              ></v-icon>
+                variant="outlined"
+              >
+                <v-icon start size="14">mdi-check</v-icon>
+                خالص
+              </v-chip>
             </div>
           </div>
         </template>
