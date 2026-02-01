@@ -122,7 +122,6 @@ const emit = defineEmits<{
 }>()
 
 const { getDriversByLaundry, settleDriverRevenue } = useDrivers()
-const { getLaundryById } = useLaundryFacilities()
 const { confirm } = useConfirm()
 const { showSuccess } = useNotification()
 
