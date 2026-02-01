@@ -22,6 +22,27 @@
             <v-icon icon="mdi-star" size="small" color="warning" class="mr-2" />
             <span class="text-body-2">{{ driver.rating }}</span>
           </div>
+          <div class="mt-2 text-caption">
+            <span class="text-grey">مستحقات: </span>
+            <span class="font-weight-bold text-primary">{{ formatCurrency(driver.unpaidRevenue || 0) }}</span>
+            <v-btn
+              v-if="(driver.unpaidRevenue || 0) > 0"
+              size="x-small"
+              variant="text"
+              color="primary"
+              class="mr-2"
+              @click.stop="$emit('settle', driver)"
+            >
+              (تسوية)
+            </v-btn>
+            <v-icon
+              v-else
+              icon="mdi-check-circle"
+              size="x-small"
+              color="success"
+              class="mr-2"
+            />
+          </div>
         </div>
       </div>
 
@@ -94,6 +115,13 @@
               title="تعديل"
               @click="$emit('edit')"
             />
+            <v-list-item
+              v-if="(driver.unpaidRevenue || 0) > 0"
+              prepend-icon="mdi-cash-check"
+              title="سداد المستحقات"
+              @click="$emit('settle', driver)"
+              color="primary"
+            />
           </v-list>
         </v-menu>
       </div>
@@ -117,7 +145,16 @@ const emit = defineEmits<{
   (e: 'deactivate'): void
   (e: 'unassign'): void
   (e: 'edit'): void
+  (e: 'settle', driver: Driver): void
 }>()
+
+const formatCurrency = (amount: number) => {
+  return new Intl.NumberFormat('ar-SA', {
+    style: 'currency',
+    currency: 'SAR',
+    maximumFractionDigits: 0
+  }).format(amount)
+}
 
 const statusColor = computed(() => {
   switch (props.driver.status) {

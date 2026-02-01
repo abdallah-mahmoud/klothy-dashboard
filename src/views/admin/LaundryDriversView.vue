@@ -113,6 +113,7 @@
           @deactivate="handleDeactivate(driver)"
           @unassign="handleUnassign(driver)"
           @edit="handleEdit(driver)"
+          @settle="handleSettle"
         />
       </v-col>
 
@@ -144,6 +145,7 @@ import { ref } from 'vue'
 import { useDrivers, type Driver } from '@/composables/useDrivers'
 import { useLaundryFacilities } from '@/composables/useLaundryFacilities'
 import { useConfirm } from '@/composables/useConfirm'
+import { useNotification } from '@/composables/useNotification'
 import DriverCard from '@/components/drivers/DriverCard.vue'
 import AssignDriverDialog from '@/components/shared/AssignDriverDialog.vue'
 import EmptyState from '@/components/shared/EmptyState.vue'
@@ -158,11 +160,13 @@ const {
   unassignedDriversCount,
   assignDriverToLaundry,
   unassignDriver,
-  updateDriverStatus
+  updateDriverStatus,
+  settleDriverRevenue
 } = useDrivers()
 
 const { laundries, totalFacilities, getLaundriesForSelect } = useLaundryFacilities()
 const { confirm } = useConfirm()
+const { showSuccess } = useNotification()
 
 const showAssignDialog = ref(false)
 const selectedDriver = ref<Driver | null>(null)
@@ -226,5 +230,18 @@ const handleUnassign = async (driver: Driver) => {
 const handleEdit = (driver: Driver) => {
   // TODO: Implement edit driver functionality
   console.log('Edit driver:', driver)
+}
+
+const handleSettle = async (driver: Driver) => {
+  const confirmed = await confirm({
+    title: 'سداد مستحقات السائق',
+    message: `هل أنت متأكد من سداد مبلغ ${driver.unpaidRevenue} ر.س للسائق ${driver.name}؟`,
+    confirmText: 'تأكيد السداد',
+    confirmColor: 'primary'
+  })
+
+  if (confirmed) {
+    await settleDriverRevenue(driver.id)
+  }
 }
 </script>

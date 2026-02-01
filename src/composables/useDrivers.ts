@@ -10,6 +10,7 @@ export interface Driver {
     assignedLaundryName: string | null
     totalTrips: number
     rating: number
+    unpaidRevenue: number
     avatar?: string
 }
 
@@ -23,7 +24,8 @@ const mockDrivers: Driver[] = [
         assignedLaundryId: 'laundry-1',
         assignedLaundryName: 'المغسلة الرئيسية',
         totalTrips: 245,
-        rating: 4.8
+        rating: 4.8,
+        unpaidRevenue: 450
     },
     {
         id: 'driver-2',
@@ -33,7 +35,8 @@ const mockDrivers: Driver[] = [
         assignedLaundryId: 'laundry-2',
         assignedLaundryName: 'فرع الملز',
         totalTrips: 198,
-        rating: 4.6
+        rating: 4.6,
+        unpaidRevenue: 320
     },
     {
         id: 'driver-3',
@@ -43,7 +46,8 @@ const mockDrivers: Driver[] = [
         assignedLaundryId: 'laundry-1',
         assignedLaundryName: 'المغسلة الرئيسية',
         totalTrips: 156,
-        rating: 4.7
+        rating: 4.7,
+        unpaidRevenue: 50
     },
     {
         id: 'driver-4',
@@ -53,7 +57,8 @@ const mockDrivers: Driver[] = [
         assignedLaundryId: null,
         assignedLaundryName: null,
         totalTrips: 67,
-        rating: 4.2
+        rating: 4.2,
+        unpaidRevenue: 0
     },
     {
         id: 'driver-5',
@@ -63,7 +68,8 @@ const mockDrivers: Driver[] = [
         assignedLaundryId: 'laundry-2',
         assignedLaundryName: 'فرع الملز',
         totalTrips: 189,
-        rating: 4.5
+        rating: 4.5,
+        unpaidRevenue: 200
     },
     {
         id: 'driver-6',
@@ -73,7 +79,8 @@ const mockDrivers: Driver[] = [
         assignedLaundryId: 'laundry-3',
         assignedLaundryName: 'فرع العليا',
         totalTrips: 134,
-        rating: 4.4
+        rating: 4.4,
+        unpaidRevenue: 150
     }
 ]
 
@@ -225,6 +232,23 @@ export function useDrivers() {
         return drivers.value.find(d => d.id === id)
     }
 
+    // Settle driver revenue
+    const settleDriverRevenue = async (driverId: string) => {
+        loading.value = true
+        try {
+            await new Promise(resolve => setTimeout(resolve, 500))
+            const driver = drivers.value.find(d => d.id === driverId)
+            if (driver) {
+                driver.unpaidRevenue = 0
+                showSuccess(`تم سداد مستحقات السائق ${driver.name}`)
+                return true
+            }
+            return false
+        } finally {
+            loading.value = false
+        }
+    }
+
     return {
         drivers,
         filteredDrivers,
@@ -238,6 +262,7 @@ export function useDrivers() {
         assignDriverToLaundry,
         unassignDriver,
         updateDriverStatus,
-        getDriverById
+        getDriverById,
+        settleDriverRevenue
     }
 }

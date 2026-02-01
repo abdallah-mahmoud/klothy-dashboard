@@ -7,7 +7,6 @@ export interface LaundryFacility {
     location: string
     city: string
     activeDrivers: number
-    activeDrivers: number
     totalOrders: number
     completedOrders: number
     laundryRevenue: number
@@ -122,15 +121,44 @@ export function useLaundryFacilities() {
         }
     }
 
+    // Settle laundry revenue (Simulated)
+    const settleLaundryRevenue = async (laundryId: string) => {
+        loading.value = true
+        try {
+            await new Promise(resolve => setTimeout(resolve, 800))
+            const laundry = laundries.value.find(l => l.id === laundryId)
+            if (laundry) {
+                laundry.laundryRevenue = 0
+                return true
+            }
+            return false
+        } finally {
+            loading.value = false
+        }
+    }
+
+    // Settle driver revenue for a laundry (Simulated)
+    const settleDriverRevenue = async (laundryId: string) => {
+        loading.value = true
+        try {
+            await new Promise(resolve => setTimeout(resolve, 800))
+            const laundry = laundries.value.find(l => l.id === laundryId)
+            if (laundry) {
+                laundry.driverRevenue = 0
+                return true
+            }
+            return false
+        } finally {
+            loading.value = false
+        }
+    }
+
     return {
         laundries,
         loading,
         totalFacilities,
-        totalActiveDrivers,
-        getLaundryById,
         getLaundriesForSelect,
-        updateDriverCount,
-        incrementDriverCount,
-        decrementDriverCount
+        settleLaundryRevenue,
+        settleDriverRevenue
     }
 }

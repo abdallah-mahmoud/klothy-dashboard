@@ -105,13 +105,47 @@
         <!-- Financials -->
         <template #item.financials="{ item }">
           <div class="text-caption">
-            <div class="text-primary mb-1">
-              <span class="font-weight-bold">المغسلة:</span>
-              {{ formatCurrency(item.laundryRevenue) }}
+            <div class="d-flex align-center justify-space-between mb-1">
+              <span class="text-primary font-weight-bold">
+                {{ formatCurrency(item.laundryRevenue) }}
+              </span>
+              <v-btn
+                v-if="item.laundryRevenue > 0"
+                size="x-small"
+                color="primary"
+                variant="text"
+                class="px-1"
+                @click="handleSettleLaundry(item)"
+              >
+                سداد
+              </v-btn>
+              <v-icon
+                v-else
+                color="success"
+                size="small"
+                icon="mdi-check-circle"
+              ></v-icon>
             </div>
-            <div class="text-secondary">
-              <span class="font-weight-bold">المندوب:</span>
-              {{ formatCurrency(item.driverRevenue) }}
+            <div class="d-flex align-center justify-space-between">
+              <span class="text-secondary font-weight-bold">
+                {{ formatCurrency(item.driverRevenue) }}
+              </span>
+              <v-btn
+                v-if="item.driverRevenue > 0"
+                size="x-small"
+                color="secondary"
+                variant="text"
+                class="px-1"
+                @click="handleSettleDrivers(item)"
+              >
+                سداد
+              </v-btn>
+              <v-icon
+                v-else
+                color="success"
+                size="small"
+                icon="mdi-check-circle"
+              ></v-icon>
             </div>
           </div>
         </template>
@@ -151,8 +185,12 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useLaundryFacilities } from '@/composables/useLaundryFacilities'
+import { useConfirm } from '@/composables/useConfirm'
+import { useNotification } from '@/composables/useNotification'
 
-const { laundries, loading } = useLaundryFacilities()
+const { laundries, loading, settleLaundryRevenue, settleDriverRevenue } = useLaundryFacilities()
+const { confirm } = useConfirm()
+const { showSuccess } = useNotification()
 
 const searchQuery = ref('')
 const statusFilter = ref('all')
@@ -176,7 +214,7 @@ const headers = [
   { title: 'الموقع', key: 'location', align: 'start' as const },
   { title: 'الحالة', key: 'status', align: 'start' as const },
   { title: 'الإحصائيات', key: 'stats', align: 'start' as const },
-  { title: 'المستحقات المالية', key: 'financials', align: 'start' as const },
+  { title: 'المستحقات المالية', key: 'financials', align: 'start' as const, width: '200px' },
   { title: 'الإجراءات', key: 'actions', sortable: false, align: 'center' as const },
 ]
 
@@ -204,6 +242,38 @@ const formatCurrency = (amount: number) => {
     currency: 'SAR',
     maximumFractionDigits: 0
   }).format(amount)
+}
+
+const handleSettleLaundry = async (laundry: any) => {
+  const confirmed = await confirm({
+    title: 'سداد مستحقات المغسلة',
+    message: `هل أنت متأكد من سداد مبلغ ${formatCurrency(laundry.laundryRevenue)} لـ ${laundry.name}؟`,
+    confirmText: 'تأكيد السداد',
+    confirmColor: 'primary'
+  })
+
+  if (confirmed) {
+    const success = await settleLaundryRevenue(laundry.id)
+    if (success) {
+      showSuccess('تم تسجيل السداد بنجاح')
+    }
+  }
+}
+
+const handleSettleDrivers = async (laundry: any) => {
+  const confirmed = await confirm({
+    title: 'سداد مستحقات المناديب',
+    message: `هل أنت متأكد من سداد مبلغ ${formatCurrency(laundry.driverRevenue)} لمناديب ${laundry.name}؟`,
+    confirmText: 'تأكيد السداد',
+    confirmColor: 'secondary'
+  })
+
+  if (confirmed) {
+    const success = await settleDriverRevenue(laundry.id)
+    if (success) {
+      showSuccess('تم تسجيل السداد بنجاح')
+    }
+  }
 }
 
 function viewLaundry(laundry: any) {
