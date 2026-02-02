@@ -71,16 +71,25 @@
       <template v-slot:append>
         <div :class="rail ? 'd-flex justify-center pa-2' : 'pa-4'">
           <v-btn
-            :block="!rail"
-            :icon="rail ? 'mdi-logout' : undefined"
+            v-if="!rail"
+            block
             variant="outlined"
             color="white"
             class="mb-2"
-            :class="{ 'mx-auto': rail }"
+            prepend-icon="mdi-logout"
             @click="logout"
           >
-            <span v-if="!rail">تسجيل الخروج</span>
-             <v-icon v-if="!rail" end>mdi-logout</v-icon>
+            تسجيل الخروج
+          </v-btn>
+          <v-btn
+            v-else
+            icon
+            variant="outlined"
+            color="white"
+            class="mb-2"
+            @click="logout"
+          >
+            <v-icon>mdi-logout</v-icon>
           </v-btn>
         </div>
       </template>
