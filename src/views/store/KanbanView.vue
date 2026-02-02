@@ -142,8 +142,6 @@
           </v-card>
         </div>
       </v-col>
-        </div>
-      </v-col>
     </v-row>
 
     <StoreOrderDialog
