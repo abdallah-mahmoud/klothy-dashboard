@@ -137,7 +137,7 @@
     </v-app-bar>
 
     <!-- Main Content -->
-    <v-main style="background-color: #F4F7FE">
+    <v-main style="background-color: #F4F7FE; height: 100vh; overflow-y: auto">
       <v-container fluid class="pa-6">
         <router-view />
       </v-container>
