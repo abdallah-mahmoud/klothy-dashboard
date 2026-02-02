@@ -85,15 +85,17 @@
 
       <v-col cols="12" sm="6" md="3">
         <v-card elevation="0" class="modern-card kpi-card pa-4">
-          <div class="d-flex align-center">
-            <div class="kpi-icon-wrapper orange ml-3">
-              <v-icon color="white" size="28">mdi-clock-outline</v-icon>
+          <div class="d-flex align-center justify-space-between">
+            <div class="d-flex align-center">
+              <div class="kpi-icon-wrapper orange ml-3">
+                <v-icon color="white" size="28">mdi-clock-outline</v-icon>
+              </div>
+              <div>
+                <div class="kpi-label">رصيد قابل للسحب</div>
+                <div class="kpi-value">{{ stats.pending }} ر.س</div>
+              </div>
             </div>
-            <div>
-              <div class="kpi-label">قيد التحويل</div>
-              <div class="kpi-value">{{ stats.pending }} ر.س</div>
-              <div class="kpi-change neutral">سيتم التحويل قريباً</div>
-            </div>
+            <v-btn icon="mdi-hand-coin" variant="tonal" color="orange" size="small" @click="showWithdrawDialog = true"></v-btn>
           </div>
         </v-card>
       </v-col>
@@ -140,6 +142,8 @@
           :items="transfers"
           :items-per-page="10"
           class="elevation-0"
+          hover
+          @click:row="openTransferDetails"
         >
           <!-- Transfer Date -->
           <template #item.date="{ item }">
@@ -176,12 +180,87 @@
               variant="text"
               color="primary"
               aria-label="تحميل إيصال التحويل"
-              @click="downloadReceipt(item)"
+              @click.stop="downloadReceipt(item)"
             ></v-btn>
           </template>
         </v-data-table>
       </v-card-text>
     </v-card>
+
+    <!-- Withdrawal Dialog -->
+    <v-dialog v-model="showWithdrawDialog" max-width="500">
+      <v-card>
+        <v-card-title class="text-h6 font-weight-bold pa-4 bg-grey-lighten-5">طلب سداد</v-card-title>
+        <v-card-text class="pa-4">
+          <div class="text-center mb-6">
+            <div class="text-h4 font-weight-bold text-primary mb-1">{{ stats.pending }} ر.س</div>
+            <div class="text-caption text-grey">المبلغ المتاح للسحب</div>
+          </div>
+          
+          <v-alert type="info" variant="tonal" class="mb-4 text-caption">
+            سيتم تحويل المبلغ إلى الحساب البنكي المسجل خلال 24 ساعة عمل.
+          </v-alert>
+
+          <div class="font-weight-bold mb-2">الحساب البنكي:</div>
+          <v-card border flat class="d-flex align-center pa-3 mb-4">
+            <v-icon color="blue" size="32" class="ml-3">mdi-bank</v-icon>
+            <div>
+              <div class="font-weight-bold">مصرف الراجحي</div>
+              <div class="text-caption font-mono">SA84 8000 0000 6080 1010 1234</div>
+            </div>
+          </v-card>
+        </v-card-text>
+        <v-card-actions class="pa-4 pt-0">
+          <v-spacer></v-spacer>
+          <v-btn variant="text" @click="showWithdrawDialog = false">إلغاء</v-btn>
+          <v-btn color="primary" variant="flat" :loading="withdrawLoading" @click="requestWithdrawal">تأكيد الطلب</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <!-- Transfer Details Dialog -->
+    <v-dialog v-model="showTransferDetails" max-width="600">
+      <v-card v-if="selectedTransfer">
+        <v-toolbar color="white" border="b" class="px-4">
+          <v-toolbar-title class="font-weight-bold text-subtitle-1">تفاصيل التحويل #{{ selectedTransfer.id }}</v-toolbar-title>
+          <v-btn icon="mdi-close" variant="text" size="small" @click="showTransferDetails = false"></v-btn>
+        </v-toolbar>
+        <v-card-text class="pa-4">
+          <v-row class="mb-4">
+            <v-col cols="6">
+              <div class="text-caption text-grey">المبلغ</div>
+              <div class="text-h6 font-weight-bold text-success">{{ selectedTransfer.amount.toLocaleString() }} ر.س</div>
+            </v-col>
+            <v-col cols="6">
+              <div class="text-caption text-grey">التاريخ</div>
+              <div class="font-weight-bold">{{ formatDate(selectedTransfer.date) }}</div>
+            </v-col>
+            <v-col cols="12">
+              <div class="text-caption text-grey">الرقم المرجعي</div>
+              <div class="font-mono bg-grey-lighten-4 pa-2 rounded">{{ selectedTransfer.reference }}</div>
+            </v-col>
+          </v-row>
+          
+          <v-divider class="mb-4"></v-divider>
+          
+          <div class="font-weight-bold mb-3">الطلبات المشمولة ({{ selectedTransfer.ordersCount }})</div>
+          <v-list density="compact" class="bg-grey-lighten-5 rounded">
+            <v-list-item v-for="i in 3" :key="i" border="b">
+              <template #prepend>
+                <div class="font-weight-bold text-caption ml-2">#ORD-12{{ 80 + i }}</div>
+              </template>
+              <v-list-item-title class="text-body-2">غسيل وكوي (4 قطع)</v-list-item-title>
+              <template #append>
+                <div class="font-weight-bold text-caption">45.00 ر.س</div>
+              </template>
+            </v-list-item>
+             <v-list-item class="text-center">
+                <v-btn variant="text" size="x-small" color="primary">عرض المزيد...</v-btn>
+             </v-list-item>
+          </v-list>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -193,6 +272,12 @@ const chartLoaded = ref(false)
 const dateRange = ref('last_30_days')
 const startDate = ref('2026-01-01')
 const endDate = ref('2026-01-30')
+
+// Dialog States
+const showWithdrawDialog = ref(false)
+const showTransferDetails = ref(false)
+const selectedTransfer = ref<any>(null)
+const withdrawLoading = ref(false)
 
 const dateRangeOptions = [
   { title: 'آخر 7 أيام', value: 'last_7_days' },
@@ -314,7 +399,20 @@ function formatDate(dateString: string): string {
 
 function downloadReceipt(transfer: any) {
   console.log('Download receipt:', transfer.reference)
-  // TODO: Generate and download PDF receipt
+}
+
+function openTransferDetails(event: Event, { item }: any) {
+  selectedTransfer.value = item
+  showTransferDetails.value = true
+}
+
+function requestWithdrawal() {
+  withdrawLoading.value = true
+  setTimeout(() => {
+    withdrawLoading.value = false
+    showWithdrawDialog.value = false
+    alert('تم إرسال طلب السداد بنجاح')
+  }, 1500)
 }
 
 onMounted(() => {
