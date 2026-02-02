@@ -142,12 +142,23 @@
           </v-card>
         </div>
       </v-col>
+        </div>
+      </v-col>
     </v-row>
+
+    <StoreOrderDialog
+      v-model="showOrderDialog"
+      :order="selectedOrder"
+      @accept="handleAccept"
+      @confirm-receive="handleConfirmReceive"
+      @ready="markAsReady"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import StoreOrderDialog from '@/components/store/StoreOrderDialog.vue'
 
 // Mock data for each column
 const incomingOrders = ref([
@@ -215,6 +226,7 @@ const readyOrders = ref([
     customer: 'هند سالم',
     items: 3,
     readyTime: 'منذ 20 دقيقة',
+    status: 'ready'
   },
   {
     id: 9,
@@ -222,17 +234,36 @@ const readyOrders = ref([
     customer: 'محمد عمر',
     items: 9,
     readyTime: 'منذ 35 دقيقة',
+    status: 'ready'
   },
 ])
 
+const selectedOrder = ref(null)
+const showOrderDialog = ref(false)
+
+function openOrderDetails(order: any, statusContext: string) {
+  selectedOrder.value = { ...order, status: statusContext }
+  showOrderDialog.value = true
+}
+
 function reviewOrder(order: any) {
-  console.log('Review order:', order.orderNumber)
-  // TODO: Open order review dialog
+  openOrderDetails(order, 'receiving')
 }
 
 function markAsReady(order: any) {
   console.log('Mark as ready:', order.orderNumber)
-  // TODO: Move order to ready column and notify driver
+  // Logic to move card would go here (omitted for UI demo)
+  showOrderDialog.value = false
+}
+
+function handleAccept(order: any) {
+  console.log('Accept order:', order.orderNumber)
+  showOrderDialog.value = false
+}
+
+function handleConfirmReceive(order: any) {
+  console.log('Confirm receive:', order.orderNumber)
+  showOrderDialog.value = false
 }
 </script>
 
