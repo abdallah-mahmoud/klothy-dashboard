@@ -5,7 +5,7 @@
         <h1 class="text-h4 font-weight-bold text-secondary mb-1">إدارة الخدمات</h1>
         <p class="text-grey">التحكم في قائمة الخدمات والأسعار</p>
       </div>
-      <v-btn color="primary" prepend-icon="mdi-plus">إضافة خدمة جديدة</v-btn>
+      <v-btn color="primary" prepend-icon="mdi-plus" @click="openDialog(null)">إضافة خدمة جديدة</v-btn>
     </div>
 
     <!-- Stats Cards -->
@@ -111,13 +111,23 @@
         </template>
       </v-data-table>
     </v-card>
+
+    <!-- Add/Edit Service Dialog -->
+    <StoreServiceDialog
+      v-model="showDialog"
+      :item="editedItem"
+      @save="handleSave"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import StoreServiceDialog from '@/components/store/StoreServiceDialog.vue'
 
 const search = ref('')
+const showDialog = ref(false)
+const editedItem = ref<any>(null)
 
 const headers = [
   { title: 'الخدمة', key: 'name', align: 'start' as const },
@@ -156,12 +166,30 @@ function getCategoryIcon(category: string) {
 }
 
 function handleStatusChange(item: any) {
+  // In real app, API call here
   console.log('Status changed:', item.name, item.active)
-  // API Call to update status
+}
+
+function openDialog(item: any = null) {
+  editedItem.value = item
+  showDialog.value = true
+}
+
+function handleSave(item: any) {
+  if (item.id) {
+    // Edit Mode
+    const index = services.value.findIndex(s => s.id === item.id)
+    if (index !== -1) {
+      services.value[index] = item
+    }
+  } else {
+    // Add Mode
+    const newId = Math.max(...services.value.map(s => s.id)) + 1
+    services.value.unshift({ ...item, id: newId })
+  }
 }
 
 function editService(item: any) {
-  console.log('Edit service:', item.name)
-  // Open edit dialog
+  openDialog(item)
 }
 </script>

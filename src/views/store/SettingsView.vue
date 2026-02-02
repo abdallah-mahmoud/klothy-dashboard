@@ -70,7 +70,7 @@
                   </div>
                 </v-card>
 
-                <v-btn color="primary" size="large" block class="mt-4">حفظ التغييرات</v-btn>
+                <v-btn color="primary" size="large" block class="mt-4" @click="showSaveSuccess">حفظ التغييرات</v-btn>
               </v-card-text>
             </v-card>
           </v-window-item>
@@ -90,7 +90,7 @@
                   </template>
                   <div v-else class="text-grey text-caption mr-4">مغلق</div>
                 </div>
-                 <v-btn color="primary" size="large" block class="mt-4">حفظ المواعيد</v-btn>
+                 <v-btn color="primary" size="large" block class="mt-4" @click="showSaveSuccess">حفظ المواعيد</v-btn>
               </v-card-text>
             </v-card>
           </v-window-item>
@@ -119,7 +119,7 @@
                      </template>
                   </v-list-item>
                 </v-list>
-                 <v-btn color="primary" size="large" block class="mt-4">حفظ التفضيلات</v-btn>
+                 <v-btn color="primary" size="large" block class="mt-4" @click="showSaveSuccess">حفظ التفضيلات</v-btn>
               </v-card-text>
             </v-card>
           </v-window-item>
@@ -127,6 +127,19 @@
         </v-window>
       </v-col>
     </v-row>
+
+    <!-- Feedback Snackbar -->
+    <v-snackbar
+      v-model="snackbar"
+      color="success"
+      location="top"
+      timeout="2000"
+    >
+      <div class="d-flex align-center">
+        <v-icon class="ml-2">mdi-check-circle</v-icon>
+        <span class="font-weight-bold">تم حفظ التغييرات بنجاح</span>
+      </div>
+    </v-snackbar>
   </div>
 </template>
 
@@ -134,6 +147,7 @@
 import { ref } from 'vue'
 
 const activeTab = ref('general')
+const snackbar = ref(false)
 
 const storeData = ref({
   name: 'مغاسل الملقا الحديثة',
@@ -157,6 +171,10 @@ const weekDays = ref([
   { name: 'الخميس', isOpen: true, open: '09:00', close: '23:00' },
   { name: 'الجمعة', isOpen: true, open: '16:00', close: '23:00' },
 ])
+
+function showSaveSuccess() {
+  snackbar.value = true
+}
 
 function getStatusColor(status: string) {
   if (status === 'open') return 'success'
