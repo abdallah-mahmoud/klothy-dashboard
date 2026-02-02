@@ -10,9 +10,9 @@
       width="280"
     >
       <!-- Logo Area -->
-      <div class="d-flex align-center justify-center pa-6 mb-6">
+      <div class="d-flex align-center justify-center mb-6" :class="rail ? 'pa-4' : 'pa-6'">
         <div class="text-center">
-          <v-avatar color="white" size="64" class="mb-3 elevation-2">
+          <v-avatar color="white" :size="rail ? 40 : 64" class="mb-3 elevation-2">
             <v-img src="/src/assets/logo.png" alt="Klothy"></v-img>
           </v-avatar>
           <div v-if="!rail" class="text-h6 font-weight-bold">لوحة الشركاء</div>
@@ -69,16 +69,18 @@
       </v-list>
 
       <template v-slot:append>
-        <div class="pa-4">
+        <div :class="rail ? 'd-flex justify-center pa-2' : 'pa-4'">
           <v-btn
-            block
+            :block="!rail"
+            :icon="rail ? 'mdi-logout' : undefined"
             variant="outlined"
             color="white"
             class="mb-2"
-            prepend-icon="mdi-logout"
+            :class="{ 'mx-auto': rail }"
             @click="logout"
           >
             <span v-if="!rail">تسجيل الخروج</span>
+             <v-icon v-if="!rail" end>mdi-logout</v-icon>
           </v-btn>
         </div>
       </template>
