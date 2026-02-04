@@ -41,15 +41,6 @@
         ></v-list-item>
 
         <v-list-item
-          prepend-icon="mdi-tshirt-crew"
-          title="الخدمات"
-          to="/store/services"
-          rounded="xl"
-          class="mb-1"
-          active-class="bg-primary"
-        ></v-list-item>
-
-        <v-list-item
           prepend-icon="mdi-cash-multiple"
           title="المالية"
           to="/store/financials"

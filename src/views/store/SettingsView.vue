@@ -8,7 +8,6 @@
         <v-card class="modern-card" elevation="0" border>
           <v-tabs v-model="activeTab" direction="vertical" color="primary">
             <v-tab value="general" prepend-icon="mdi-store-cog">عام</v-tab>
-            <v-tab value="hours" prepend-icon="mdi-clock-outline">ساعات العمل</v-tab>
             <v-tab value="notifications" prepend-icon="mdi-bell-outline">الإشعارات</v-tab>
           </v-tabs>
         </v-card>
@@ -71,26 +70,6 @@
                 </v-card>
 
                 <v-btn color="primary" size="large" block class="mt-4" @click="showSaveSuccess">حفظ التغييرات</v-btn>
-              </v-card-text>
-            </v-card>
-          </v-window-item>
-
-          <!-- Working Hours -->
-          <v-window-item value="hours">
-            <v-card class="modern-card pa-4" elevation="0" border>
-              <v-card-title class="font-weight-bold mb-4">ساعات العمل</v-card-title>
-              <v-card-text>
-                <div v-for="(day, index) in weekDays" :key="index" class="d-flex align-center mb-4 py-2 border-b">
-                  <div style="width: 120px" class="font-weight-bold">{{ day.name }}</div>
-                  <v-switch v-model="day.isOpen" color="success" hide-details density="compact" class="ml-4" inset></v-switch>
-                  <template v-if="day.isOpen">
-                    <v-text-field v-model="day.open" type="time" density="compact" variant="outlined" hide-details class="ml-2" style="max-width: 130px"></v-text-field>
-                    <span class="mx-2 text-grey">إلى</span>
-                    <v-text-field v-model="day.close" type="time" density="compact" variant="outlined" hide-details style="max-width: 130px"></v-text-field>
-                  </template>
-                  <div v-else class="text-grey text-caption mr-4">مغلق</div>
-                </div>
-                 <v-btn color="primary" size="large" block class="mt-4" @click="showSaveSuccess">حفظ المواعيد</v-btn>
               </v-card-text>
             </v-card>
           </v-window-item>
@@ -161,16 +140,6 @@ const notifications = ref({
   driverArrival: true,
   dailyReport: false
 })
-
-const weekDays = ref([
-  { name: 'السبت', isOpen: true, open: '09:00', close: '23:00' },
-  { name: 'الأحد', isOpen: true, open: '09:00', close: '23:00' },
-  { name: 'الاثنين', isOpen: true, open: '09:00', close: '23:00' },
-  { name: 'الثلاثاء', isOpen: true, open: '09:00', close: '23:00' },
-  { name: 'الأربعاء', isOpen: true, open: '09:00', close: '23:00' },
-  { name: 'الخميس', isOpen: true, open: '09:00', close: '23:00' },
-  { name: 'الجمعة', isOpen: true, open: '16:00', close: '23:00' },
-])
 
 function showSaveSuccess() {
   snackbar.value = true

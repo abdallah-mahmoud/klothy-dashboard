@@ -27,16 +27,8 @@
                     </v-avatar>
                     <div>
                       <div class="font-weight-bold text-body-1">{{ order.customer }}</div>
-                      <div class="text-caption text-grey">0551234567</div>
+                      <div class="text-caption text-grey">عميل كلوثي</div>
                     </div>
-                  </div>
-                  
-                  <v-divider class="mb-3"></v-divider>
-                  
-                  <div class="text-caption text-grey mb-1">معلومات التوصيل</div>
-                  <div class="d-flex align-center text-body-2 text-grey-darken-1">
-                    <v-icon size="small" class="ml-2">mdi-map-marker</v-icon>
-                    {{ order.address || 'حي الملقا، الرياض' }}
                   </div>
                 </v-card-text>
               </v-card>
@@ -56,7 +48,7 @@
                   </div>
                   <v-divider class="my-3"></v-divider>
                   <div class="d-flex justify-space-between align-center">
-                    <span class="text-grey text-body-2">إجمالي الطلب</span>
+                    <span class="text-grey text-body-2">إجمالي الخدمات</span>
                     <span class="text-h6 font-weight-bold text-primary">{{ order.total || '45.00' }} ر.س</span>
                   </div>
                 </v-card-text>

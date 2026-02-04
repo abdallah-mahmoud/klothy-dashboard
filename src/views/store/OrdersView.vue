@@ -58,17 +58,6 @@
           <span class="font-weight-bold">{{ item.total }} ر.س</span>
         </template>
 
-        <!-- Actions Column -->
-        <template #item.actions="{ item }">
-          <v-btn
-            icon="mdi-eye-outline"
-            variant="text"
-            color="primary"
-            size="small"
-            @click="viewOrder(item)"
-          ></v-btn>
-        </template>
-
         <!-- Empty State -->
         <template #no-data>
           <div class="py-8 text-center">
@@ -78,27 +67,15 @@
         </template>
       </v-data-table>
     </v-card>
-
-    <!-- Order Details Dialog -->
-    <StoreOrderDialog
-      v-model="showDialog"
-      :order="selectedOrder"
-      @accept="handleAction"
-      @confirm-receive="handleAction"
-      @ready="handleAction"
-    />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import StoreOrderDialog from '@/components/store/StoreOrderDialog.vue'
 
 // Search & Filter State
 const searchQuery = ref('')
 const statusFilter = ref('all')
-const showDialog = ref(false)
-const selectedOrder = ref<any>(null)
 
 const statusOptions = [
   { title: 'الكل', value: 'all' },
@@ -114,7 +91,6 @@ const headers = [
   { title: 'التاريخ', key: 'date', align: 'start' as const },
   { title: 'الإجمالي', key: 'total', align: 'end' as const },
   { title: 'الحالة', key: 'status', align: 'center' as const },
-  { title: 'الإجراءات', key: 'actions', align: 'center' as const, sortable: false },
 ]
 
 const orders = ref([
@@ -193,15 +169,5 @@ function getStatusText(status: string) {
     incoming: 'جديد'
   }
   return texts[status] || status
-}
-
-function viewOrder(item: any) {
-  selectedOrder.value = item
-  showDialog.value = true
-}
-
-function handleAction() {
-  showDialog.value = false
-  // In a real app, refresh data
 }
 </script>
