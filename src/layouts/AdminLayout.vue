@@ -41,20 +41,17 @@
       </div>
 
       <!-- Navigation Menu -->
-      <v-list nav density="compact" class="nav-menu">
+      <v-list density="compact" nav class="py-2">
         <v-list-item
           v-for="item in menuItems"
           :key="item.path"
           :to="item.path"
           :prepend-icon="item.icon"
-          :title="item.title"
-          active-class="active-nav-item"
+          :title="$t(item.title)"
           rounded="lg"
-          class="mx-2 my-1 nav-item"
+          class="mb-1 mx-2"
+          active-class="bg-primary"
         >
-          <template #title>
-            <span class="nav-text">{{ item.title }}</span>
-          </template>
         </v-list-item>
       </v-list>
 
@@ -241,12 +238,12 @@ onUnmounted(() => {
 })
 
 const menuItems = [
-  { title: 'لوحة التحكم', path: '/admin', icon: 'mdi-view-dashboard' },
-  { title: 'المغاسل', path: '/admin/laundries', icon: 'mdi-office-building' },
-  { title: 'المندوبين', path: '/admin/drivers', icon: 'mdi-moped' },
-  { title: 'المدن', path: '/admin/cities', icon: 'mdi-city' },
-  { title: 'الطلبات', path: '/admin/orders', icon: 'mdi-package-variant' },
-  { title: 'الأسعار', path: '/admin/pricing', icon: 'mdi-currency-usd' },
+  { title: 'admin.dashboard', path: '/admin', icon: 'mdi-view-dashboard' },
+  { title: 'admin.laundries', path: '/admin/laundries', icon: 'mdi-office-building' },
+  { title: 'admin.drivers', path: '/admin/drivers', icon: 'mdi-moped' },
+  { title: 'admin.cities', path: '/admin/cities', icon: 'mdi-city' },
+  { title: 'admin.orders', path: '/admin/orders', icon: 'mdi-package-variant' },
+  { title: 'admin.pricing', path: '/admin/pricing', icon: 'mdi-currency-usd' },
 ]
 
 const breadcrumbs = computed(() => {

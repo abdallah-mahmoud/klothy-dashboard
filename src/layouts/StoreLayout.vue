@@ -16,8 +16,8 @@
           <v-avatar color="white" :size="rail && mdAndUp ? 40 : 64" class="mb-3 elevation-2">
             <v-img src="/src/assets/logo.png" alt="Klothy"></v-img>
           </v-avatar>
-          <div v-if="!rail || mobile" class="text-h6 font-weight-bold">لوحة الشركاء</div>
-          <div v-if="!rail || mobile" class="text-caption text-grey-lighten-1">Klothy Partner</div>
+          <div v-if="!rail || mobile" class="text-h6 font-weight-bold">{{ $t('store.title') }}</div>
+          <div v-if="!rail || mobile" class="text-caption text-grey-lighten-1">{{ $t('store.subtitle') }}</div>
         </div>
       </div>
 
@@ -25,7 +25,7 @@
       <v-list nav class="px-2">
         <v-list-item
           prepend-icon="mdi-view-dashboard-variant"
-          title="الرئيسية"
+          :title="$t('store.kanban')"
           to="/store/kanban"
           rounded="xl"
           class="mb-1"
@@ -35,7 +35,7 @@
 
         <v-list-item
           prepend-icon="mdi-clipboard-list"
-          title="سجل الطلبات"
+          :title="$t('store.orders')"
           to="/store/orders"
           rounded="xl"
           class="mb-1"
@@ -45,7 +45,7 @@
 
         <v-list-item
           prepend-icon="mdi-cash-multiple"
-          title="المالية"
+          :title="$t('financials.title')"
           to="/store/financials"
           rounded="xl"
           class="mb-1"
@@ -55,7 +55,7 @@
 
         <v-list-item
           prepend-icon="mdi-cog"
-          title="الإعدادات"
+          :title="$t('store.settings')"
           to="/store/settings"
           rounded="xl"
           class="mb-1"
