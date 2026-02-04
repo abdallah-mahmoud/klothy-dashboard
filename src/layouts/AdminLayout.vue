@@ -104,6 +104,29 @@
         </v-badge>
       </v-btn>
 
+      <!-- Language Switcher -->
+      <v-menu>
+        <template #activator="{ props }">
+          <v-btn icon variant="text" v-bind="props">
+            <v-icon>mdi-translate</v-icon>
+          </v-btn>
+        </template>
+        <v-list density="compact">
+          <v-list-item @click="setLanguage('ar')" :active="locale === 'ar'">
+            <template #prepend>
+              <v-icon v-if="locale === 'ar'">mdi-check</v-icon>
+            </template>
+            <v-list-item-title>العربية</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="setLanguage('en')" :active="locale === 'en'">
+            <template #prepend>
+              <v-icon v-if="locale === 'en'">mdi-check</v-icon>
+            </template>
+            <v-list-item-title>English</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+
       <!-- Admin Profile Menu -->
       <v-menu>
         <template #activator="{ props }">
@@ -167,6 +190,7 @@ import { useAuthStore } from '@/stores/auth'
 import { usePreferencesStore } from '@/stores/preferences'
 import { useKeyboardShortcuts } from '@/composables/useKeyboardShortcuts'
 import { useUndo } from '@/composables/useUndo'
+import { useLanguage } from '@/composables/useLanguage'
 import KeyboardShortcutsHelp from '@/components/shared/KeyboardShortcutsHelp.vue'
 import GlobalSearch from '@/components/shared/GlobalSearch.vue'
 import UndoSnackbar from '@/components/shared/UndoSnackbar.vue'

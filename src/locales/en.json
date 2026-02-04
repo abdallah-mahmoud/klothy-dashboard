@@ -1,0 +1,102 @@
+{
+    "common": {
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "edit": "Edit",
+        "search": "Search",
+        "actions": "Actions",
+        "close": "Close",
+        "add": "Add",
+        "submit": "Submit",
+        "confirm": "Confirm",
+        "loading": "Loading...",
+        "noData": "No data available",
+        "error": "An error occurred"
+    },
+    "auth": {
+        "login": "Login",
+        "email": "Email",
+        "password": "Password",
+        "welcome": "Welcome to",
+        "slogan": "Clean, Fast, Reliable"
+    },
+    "admin": {
+        "dashboard": "Dashboard",
+        "laundries": "Laundries",
+        "drivers": "Drivers",
+        "cities": "Cities",
+        "orders": "Orders",
+        "pricing": "Pricing",
+        "title": "Admin Dashboard"
+    },
+    "store": {
+        "dashboard": "Store Dashboard",
+        "kanban": "Home",
+        "orders": "Order History",
+        "financials": "Financials",
+        "settings": "Settings",
+        "title": "Partner Portal",
+        "subtitle": "Klothy Partner"
+    },
+    "orders": {
+        "title": "Orders Management",
+        "orderNumber": "Order Number",
+        "customer": "Customer",
+        "laundry": "Laundry",
+        "driver": "Driver",
+        "date": "Date",
+        "amount": "Amount",
+        "status": "Status",
+        "items": "Items Count",
+        "total": "Total",
+        "new": "New",
+        "processing": "Processing",
+        "ready": "Ready",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
+    },
+    "drivers": {
+        "title": "Drivers Management",
+        "name": "Name",
+        "phone": "Phone",
+        "vehicle": "Vehicle Type",
+        "completedOrders": "Completed Orders",
+        "rating": "Rating",
+        "status": "Status",
+        "active": "Active",
+        "inactive": "Inactive"
+    },
+    "laundries": {
+        "title": "Laundries Management",
+        "name": "Laundry Name",
+        "city": "City",
+        "phone": "Phone",
+        "email": "Email",
+        "status": "Status",
+        "pendingPayment": "Pending Payment",
+        "iban": "IBAN",
+        "commission": "Commission"
+    },
+    "cities": {
+        "title": "Cities Management",
+        "name": "City Name (Arabic)",
+        "nameEn": "City Name (English)",
+        "add": "Add City"
+    },
+    "financials": {
+        "title": "Financial Reports",
+        "totalRevenue": "Total Revenue",
+        "completedOrders": "Completed Orders",
+        "pending": "Available Balance",
+        "avgOrderValue": "Avg Order Value",
+        "withdraw": "Request Withdrawal",
+        "transferHistory": "Transfer History"
+    },
+    "kanban": {
+        "incoming": "Incoming",
+        "receiving": "Confirm Receipt",
+        "processing": "Processing",
+        "ready": "Ready for Delivery"
+    }
+}

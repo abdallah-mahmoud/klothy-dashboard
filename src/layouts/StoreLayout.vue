@@ -139,6 +139,29 @@
         </v-badge>
       </v-btn>
 
+      <!-- Language Switcher -->
+      <v-menu>
+        <template #activator="{ props }">
+          <v-btn icon v-bind="props" class="ml-2">
+            <v-icon>mdi-translate</v-icon>
+          </v-btn>
+        </template>
+        <v-list density="compact">
+          <v-list-item @click="setLanguage('ar')" :active="locale === 'ar'">
+            <template #prepend>
+              <v-icon v-if="locale === 'ar'">mdi-check</v-icon>
+            </template>
+            <v-list-item-title>العربية</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="setLanguage('en')" :active="locale === 'en'">
+            <template #prepend>
+              <v-icon v-if="locale === 'en'">mdi-check</v-icon>
+            </template>
+            <v-list-item-title>English</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+
       <!-- User Profile -->
       <v-avatar color="primary" :class="mobile ? 'ml-2' : 'ml-4'" class="cursor-pointer">
         <span class="text-h6 text-white">M</span>
@@ -158,10 +181,12 @@
 import { ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useDisplay } from 'vuetify'
+import { useLanguage } from '@/composables/useLanguage'
 
 const router = useRouter()
 const route = useRoute()
 const { mobile, mdAndUp } = useDisplay()
+const { locale, setLanguage } = useLanguage()
 
 const drawer = ref(true)
 const rail = ref(false)

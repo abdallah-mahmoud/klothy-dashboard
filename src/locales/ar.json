@@ -1,0 +1,102 @@
+{
+    "common": {
+        "save": "حفظ",
+        "cancel": "إلغاء",
+        "delete": "حذف",
+        "edit": "تعديل",
+        "search": "بحث",
+        "actions": "الإجراءات",
+        "close": "إغلاق",
+        "add": "إضافة",
+        "submit": "إرسال",
+        "confirm": "تأكيد",
+        "loading": "جاري التحميل...",
+        "noData": "لا توجد بيانات",
+        "error": "حدث خطأ"
+    },
+    "auth": {
+        "login": "تسجيل الدخول",
+        "email": "البريد الإلكتروني",
+        "password": "كلمة المرور",
+        "welcome": "مرحباً بك في",
+        "slogan": "نظيف، سريع، موثوق"
+    },
+    "admin": {
+        "dashboard": "لوحة التحكم",
+        "laundries": "المغاسل",
+        "drivers": "المندوبين",
+        "cities": "المدن",
+        "orders": "الطلبات",
+        "pricing": "الأسعار",
+        "title": "لوحة تحكم الإدارة"
+    },
+    "store": {
+        "dashboard": "لوحة تحكم - المتجر",
+        "kanban": "الرئيسية",
+        "orders": "سجل الطلبات",
+        "financials": "المالية",
+        "settings": "الإعدادات",
+        "title": "لوحة الشركاء",
+        "subtitle": "Klothy Partner"
+    },
+    "orders": {
+        "title": "إدارة الطلبات",
+        "orderNumber": "رقم الطلب",
+        "customer": "العميل",
+        "laundry": "المغسلة",
+        "driver": "المندوب",
+        "date": "التاريخ",
+        "amount": "القيمة",
+        "status": "الحالة",
+        "items": "عدد الأصناف",
+        "total": "الإجمالي",
+        "new": "جديد",
+        "processing": "جاري الغسيل",
+        "ready": "جاهز",
+        "completed": "مكتمل",
+        "cancelled": "ملغي"
+    },
+    "drivers": {
+        "title": "إدارة المندوبين",
+        "name": "الاسم",
+        "phone": "رقم الجوال",
+        "vehicle": "نوع المركبة",
+        "completedOrders": "الطلبات المكتملة",
+        "rating": "التقييم",
+        "status": "الحالة",
+        "active": "نشط",
+        "inactive": "غير نشط"
+    },
+    "laundries": {
+        "title": "إدارة المغاسل",
+        "name": "اسم المغسلة",
+        "city": "المدينة",
+        "phone": "رقم الجوال",
+        "email": "البريد الإلكتروني",
+        "status": "الحالة",
+        "pendingPayment": "مستحقات معلقة",
+        "iban": "رقم الآيبان",
+        "commission": "العمولة"
+    },
+    "cities": {
+        "title": "إدارة المدن",
+        "name": "اسم المدينة",
+        "nameEn": "الاسم بالإنجليزية",
+        "add": "إضافة مدينة"
+    },
+    "financials": {
+        "title": "التقارير المالية",
+        "totalRevenue": "إجمالي الإيرادات",
+        "completedOrders": "الطلبات المكتملة",
+        "pending": "رصيد قابل للسحب",
+        "avgOrderValue": "متوسط قيمة الطلب",
+        "withdraw": "طلب سداد",
+        "transferHistory": "سجل التحويلات"
+    },
+    "kanban": {
+        "incoming": "قادم إليك",
+        "receiving": "تأكيد الاستلام",
+        "processing": "جاري العمل",
+        "ready": "جاهز للتسليم"
+    }
+}
