@@ -193,10 +193,14 @@ import GlobalSearch from '@/components/shared/GlobalSearch.vue'
 import UndoSnackbar from '@/components/shared/UndoSnackbar.vue'
 import SettingsDialog from '@/components/shared/SettingsDialog.vue'
 
+
 const router = useRouter()
 const route = useRoute()
 const authStore = useAuthStore()
 const preferencesStore = usePreferencesStore()
+
+// Language switching
+const { locale, setLanguage } = useLanguage()
 
 // Keyboard shortcuts
 const { isSearchOpen, isShortcutsHelpOpen, registerShortcuts, unregisterShortcuts } = useKeyboardShortcuts()
