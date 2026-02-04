@@ -222,6 +222,7 @@ const menuItems = [
   { title: 'المندوبين', path: '/admin/drivers', icon: 'mdi-moped' },
   { title: 'المدن', path: '/admin/cities', icon: 'mdi-city' },
   { title: 'الطلبات', path: '/admin/orders', icon: 'mdi-package-variant' },
+  { title: 'الأسعار', path: '/admin/pricing', icon: 'mdi-currency-usd' },
 ]
 
 const breadcrumbs = computed(() => {
