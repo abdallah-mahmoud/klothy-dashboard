@@ -137,53 +137,56 @@
     <v-card elevation="0" class="modern-card">
       <v-card-title class="text-h6 font-weight-bold">سجل التحويلات</v-card-title>
       <v-card-text>
-        <v-data-table
-          :headers="transferHeaders"
-          :items="transfers"
-          :items-per-page="10"
-          class="elevation-0"
-          hover
-          @click:row="openTransferDetails"
-        >
-          <!-- Transfer Date -->
-          <template #item.date="{ item }">
-            <div>
-              <div class="font-weight-bold">{{ formatDate(item.date) }}</div>
-              <div class="text-caption text-grey">{{ item.time }}</div>
-            </div>
-          </template>
+        <div style="overflow-x: auto;">
+          <v-data-table
+            :headers="transferHeaders"
+            :items="transfers"
+            :items-per-page="10"
+            :mobile-breakpoint="0"
+            class="elevation-0"
+            hover
+            @click:row="openTransferDetails"
+          >
+            <!-- Transfer Date -->
+            <template #item.date="{ item }">
+              <div>
+                <div class="font-weight-bold">{{ formatDate(item.date) }}</div>
+                <div class="text-caption text-grey">{{ item.time }}</div>
+              </div>
+            </template>
 
-          <!-- Amount -->
-          <template #item.amount="{ item }">
-            <span class="text-h6 font-weight-bold text-success">
-              +{{ item.amount.toLocaleString() }} ر.س
-            </span>
-          </template>
+            <!-- Amount -->
+            <template #item.amount="{ item }">
+              <span class="text-h6 font-weight-bold text-success">
+                +{{ item.amount.toLocaleString() }} ر.س
+              </span>
+            </template>
 
-          <!-- Status -->
-          <template #item.status="{ item }">
-            <v-chip :color="getTransferStatusColor(item.status)" size="small">
-              {{ item.statusText }}
-            </v-chip>
-          </template>
+            <!-- Status -->
+            <template #item.status="{ item }">
+              <v-chip :color="getTransferStatusColor(item.status)" size="small">
+                {{ item.statusText }}
+              </v-chip>
+            </template>
 
-          <!-- Reference -->
-          <template #item.reference="{ item }">
-            <span class="text-caption font-mono">{{ item.reference }}</span>
-          </template>
+            <!-- Reference -->
+            <template #item.reference="{ item }">
+              <span class="text-caption font-mono">{{ item.reference }}</span>
+            </template>
 
-          <!-- Actions -->
-          <template #item.actions="{ item }">
-            <v-btn
-              icon="mdi-download"
-              size="small"
-              variant="text"
-              color="primary"
-              aria-label="تحميل إيصال التحويل"
-              @click.stop="downloadReceipt(item)"
-            ></v-btn>
-          </template>
-        </v-data-table>
+            <!-- Actions -->
+            <template #item.actions="{ item }">
+              <v-btn
+                icon="mdi-download"
+                size="small"
+                variant="text"
+                color="primary"
+                aria-label="تحميل إيصال التحويل"
+                @click.stop="downloadReceipt(item)"
+              ></v-btn>
+            </template>
+          </v-data-table>
+        </div>
       </v-card-text>
     </v-card>
 

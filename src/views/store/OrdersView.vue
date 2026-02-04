@@ -34,38 +34,41 @@
 
     <!-- Orders Table -->
     <v-card class="modern-card" elevation="0" border>
-      <v-data-table
-        :headers="headers"
-        :items="filteredOrders"
-        :search="searchQuery"
-        hover
-        class="rounded-lg"
-      >
-        <!-- Status Column -->
-        <template #item.status="{ item }">
-          <v-chip
-            :color="getStatusColor(item.status)"
-            size="small"
-            variant="flat"
-            class="font-weight-medium"
-          >
-            {{ getStatusText(item.status) }}
-          </v-chip>
-        </template>
+      <div style="overflow-x: auto;">
+        <v-data-table
+          :headers="headers"
+          :items="filteredOrders"
+          :search="searchQuery"
+          :mobile-breakpoint="0"
+          hover
+          class="rounded-lg"
+        >
+          <!-- Status Column -->
+          <template #item.status="{ item }">
+            <v-chip
+              :color="getStatusColor(item.status)"
+              size="small"
+              variant="flat"
+              class="font-weight-medium"
+            >
+              {{ getStatusText(item.status) }}
+            </v-chip>
+          </template>
 
-        <!-- Total Column -->
-        <template #item.total="{ item }">
-          <span class="font-weight-bold">{{ item.total }} ر.س</span>
-        </template>
+          <!-- Total Column -->
+          <template #item.total="{ item }">
+            <span class="font-weight-bold">{{ item.total }} ر.س</span>
+          </template>
 
-        <!-- Empty State -->
-        <template #no-data>
-          <div class="py-8 text-center">
-            <v-icon size="48" color="grey-lighten-2" class="mb-2">mdi-file-search-outline</v-icon>
-            <div class="text-grey">لا توجد طلبات تطابق بحثك</div>
-          </div>
-        </template>
-      </v-data-table>
+          <!-- Empty State -->
+          <template #no-data>
+            <div class="py-8 text-center">
+              <v-icon size="48" color="grey-lighten-2" class="mb-2">mdi-file-search-outline</v-icon>
+              <div class="text-grey">لا توجد طلبات تطابق بحثك</div>
+            </div>
+          </template>
+        </v-data-table>
+      </div>
     </v-card>
   </div>
 </template>
