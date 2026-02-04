@@ -359,6 +359,15 @@ function handleLogout() {
   text-decoration: none !important;
 }
 
+/* Remove underline from navigation links */
+.v-list-item {
+  text-decoration: none !important;
+}
+
+.v-list-item :deep(.v-list-item__content) {
+  text-decoration: none !important;
+}
+
 /* Optimized icon size */
 :deep(.nav-item .v-icon) {
   font-size: 22px !important;

@@ -217,6 +217,23 @@ function logout() {
 </script>
 
 <style scoped>
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* Remove underline from navigation links */
+.v-list-item {
+  text-decoration: none !important;
+}
+
+.v-list-item :deep(.v-list-item__content) {
+  text-decoration: none !important;
+}
+
+.v-list-item :deep(.v-list-item-title) {
+  text-decoration: none !important;
+}
+
 .v-list-item--nav .v-list-item-title {
   font-size: 0.95rem;
   font-weight: 500;
