@@ -76,6 +76,8 @@
         :items-per-page="15"
         :loading="loading"
         class="elevation-0"
+        hover
+        @click:row="openFinancialDetails"
       >
         <!-- Laundry Name -->
         <template #item.name="{ item }">
@@ -198,6 +200,13 @@
       </v-data-table>
     </v-card>
 
+    <!-- Laundry Financial Details Dialog -->
+    <LaundryFinancialDialog
+      v-model="showFinancialDialog"
+      :laundry="selectedLaundry"
+    />
+
+    <!-- Driver Settlement Dialog -->
     <DriverSettlementDialog
       v-model="showSettlementDialog"
       :laundry="selectedSettlementLaundry"
@@ -212,6 +221,7 @@ import { useLaundryFacilities } from '@/composables/useLaundryFacilities'
 import { useConfirm } from '@/composables/useConfirm'
 import { useNotification } from '@/composables/useNotification'
 import DriverSettlementDialog from '@/components/laundries/DriverSettlementDialog.vue'
+import LaundryFinancialDialog from '@/components/admin/LaundryFinancialDialog.vue'
 
 const { laundries, loading, settleLaundryRevenue, settleDriverRevenue } = useLaundryFacilities()
 const { confirm } = useConfirm()
@@ -222,6 +232,8 @@ const statusFilter = ref('all')
 const cityFilter = ref('all')
 const showSettlementDialog = ref(false)
 const selectedSettlementLaundry = ref<any>(null)
+const showFinancialDialog = ref(false)
+const selectedLaundry = ref<any>(null)
 
 const statusOptions = [
   { title: 'الكل', value: 'all' },
@@ -321,6 +333,11 @@ const onDriversSettled = async () => {
      // Since we don't have a "getLaundryRevenueFromDrivers" method readily available here without importing useDrivers, 
      // lets just rely on the dialog's visual feedback and maybe refresh the table if real data.
   }
+}
+
+function openFinancialDetails(_: any, row: any) {
+  selectedLaundry.value = row.item
+  showFinancialDialog.value = true
 }
 
 function viewLaundry(laundry: any) {

@@ -217,9 +217,11 @@ onUnmounted(() => {
 })
 
 const menuItems = [
-  { title: 'الرئيسية', icon: 'mdi-view-dashboard', path: '/admin/dashboard' },
-  { title: 'الخريطة الحية', icon: 'mdi-map-marker', path: '/admin/live-map' },
-  { title: 'الطلبات', icon: 'mdi-format-list-bulleted', path: '/admin/orders' },
+  { title: 'لوحة الت حكم', path: '/admin', icon: 'mdi-view-dashboard' },
+  { title: 'المغاسل', path: '/admin/laundries', icon: 'mdi-office-building' },
+  { title: 'المندوبين', path: '/admin/drivers', icon: 'mdi-moped' },
+  { title: 'المدن', path: '/admin/cities', icon: 'mdi-city' },
+  { title: 'الطلبات', path: '/admin/orders', icon: 'mdi-package-variant' },
   { title: 'المناديب', icon: 'mdi-car', path: '/admin/drivers' },
   { title: 'إسناد المناديب', icon: 'mdi-swap-horizontal', path: '/admin/laundry-drivers' },
   { title: 'المغاسل', icon: 'mdi-store', path: '/admin/laundries' },

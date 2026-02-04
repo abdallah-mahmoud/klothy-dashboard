@@ -236,6 +236,24 @@
           </div>
         </template>
 
+        <!-- Pickup Time -->
+        <template #item.pickupTime="{ item }">
+          <div v-if="item.pickupTime" class="text-caption text-blue">
+            <v-icon size="small" class="ml-1">mdi-package-up</v-icon>
+            {{ formatDateTime(item.pickupTime) }}
+          </div>
+          <span v-else class="text-grey text-caption">--</span>
+        </template>
+
+        <!-- Delivery Time -->
+        <template #item.deliveryTime="{ item }">
+          <div v-if="item.deliveryTime" class="text-caption text-success">
+            <v-icon size="small" class="ml-1">mdi-package-variant-closed-check</v-icon>
+            {{ formatDateTime(item.deliveryTime) }}
+          </div>
+          <span v-else class="text-grey text-caption">--</span>
+        </template>
+
         <!-- Actions -->
         <template #item.actions="{ item }">
           <v-menu>
@@ -405,6 +423,8 @@ const headers = [
   { title: 'المغسلة', key: 'laundry', align: 'start' as const },
   { title: 'المندوب', key: 'driver', align: 'start' as const },
   { title: 'تاريخ الطلب', key: 'createdAt', align: 'start' as const },
+  { title: 'وقت الاستلام', key: 'pickupTime', align: 'start' as const },
+  { title: 'وقت التسليم', key: 'deliveryTime', align: 'start' as const },
   { title: 'القيمة', key: 'amount', align: 'start' as const },
   { title: 'الحالة', key: 'status', align: 'start' as const },
   { title: 'الإجراءات', key: 'actions', sortable: false, align: 'center' as const },
@@ -422,6 +442,8 @@ const orders = ref([
     status: 'جاري الغسيل',
     statusValue: 'at_store',
     createdAt: '2026-01-29T10:30:00',
+    pickupTime: '2026-01-29T14:00:00',
+    deliveryTime: null,
   },
   {
     id: '2',
@@ -433,6 +455,8 @@ const orders = ref([
     status: 'جديد',
     statusValue: 'new',
     createdAt: '2026-01-29T11:15:00',
+    pickupTime: null,
+    deliveryTime: null,
   },
   {
     id: '3',
@@ -444,6 +468,8 @@ const orders = ref([
     status: 'مكتمل',
     statusValue: 'completed',
     createdAt: '2026-01-28T14:20:00',
+    pickupTime: '2026-01-28T16:30:00',
+    deliveryTime: '2026-01-29T09:15:00',
   },
   {
     id: '4',
@@ -455,6 +481,8 @@ const orders = ref([
     status: 'جاري التوصيل',
     statusValue: 'in_delivery',
     createdAt: '2026-01-28T09:45:00',
+    pickupTime: '2026-01-28T11:00:00',
+    deliveryTime: '2026-01-29T13:30:00',
   },
   {
     id: '5',
@@ -538,6 +566,16 @@ function formatDate(dateString: string): string {
       day: 'numeric',
     })
   }
+}
+
+function formatDateTime(dateString: string) {
+  const date = new Date(dateString)
+  return date.toLocaleDateString('ar-SA', {
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  })
 }
 
 function printInvoice(order: any) {
