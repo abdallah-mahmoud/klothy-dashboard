@@ -3,20 +3,21 @@
     <!-- Navigation Drawer -->
     <v-navigation-drawer
       v-model="drawer"
-      :rail="rail"
-      permanent
+      :rail="rail && mdAndUp"
+      :permanent="mdAndUp"
+      :temporary="mobile"
       color="#1F2E45"
       theme="dark"
       width="280"
     >
       <!-- Logo Area -->
-      <div class="d-flex align-center justify-center mb-6" :class="rail ? 'pa-4' : 'pa-6'">
+      <div class="d-flex align-center justify-center mb-6" :class="rail && mdAndUp ? 'pa-4' : 'pa-6'">
         <div class="text-center">
-          <v-avatar color="white" :size="rail ? 40 : 64" class="mb-3 elevation-2">
+          <v-avatar color="white" :size="rail && mdAndUp ? 40 : 64" class="mb-3 elevation-2">
             <v-img src="/src/assets/logo.png" alt="Klothy"></v-img>
           </v-avatar>
-          <div v-if="!rail" class="text-h6 font-weight-bold">لوحة الشركاء</div>
-          <div v-if="!rail" class="text-caption text-grey-lighten-1">Klothy Partner</div>
+          <div v-if="!rail || mobile" class="text-h6 font-weight-bold">لوحة الشركاء</div>
+          <div v-if="!rail || mobile" class="text-caption text-grey-lighten-1">Klothy Partner</div>
         </div>
       </div>
 
@@ -29,6 +30,7 @@
           rounded="xl"
           class="mb-1"
           active-class="bg-primary"
+          :min-height="48"
         ></v-list-item>
 
         <v-list-item
@@ -38,6 +40,7 @@
           rounded="xl"
           class="mb-1"
           active-class="bg-primary"
+          :min-height="48"
         ></v-list-item>
 
         <v-list-item
@@ -47,6 +50,7 @@
           rounded="xl"
           class="mb-1"
           active-class="bg-primary"
+          :min-height="48"
         ></v-list-item>
 
         <v-list-item
@@ -56,13 +60,14 @@
           rounded="xl"
           class="mb-1"
           active-class="bg-primary"
+          :min-height="48"
         ></v-list-item>
       </v-list>
 
       <template v-slot:append>
-        <div :class="rail ? 'd-flex justify-center pa-2' : 'pa-4'">
+        <div :class="rail && mdAndUp ? 'd-flex justify-center pa-2' : 'pa-4'">
           <v-btn
-            v-if="!rail"
+            v-if="!rail || mobile"
             block
             variant="outlined"
             color="white"
@@ -87,8 +92,8 @@
     </v-navigation-drawer>
 
     <!-- Top Bar -->
-    <v-app-bar flat border color="white" height="72">
-      <v-app-bar-nav-icon @click="rail = !rail"></v-app-bar-nav-icon>
+    <v-app-bar flat border color="white" :height="mobile ? 56 : 72">
+      <v-app-bar-nav-icon @click="toggleNav"></v-app-bar-nav-icon>
       
       <v-toolbar-title class="font-weight-bold text-secondary">
         {{ pageTitle }}
@@ -103,10 +108,12 @@
             v-bind="props"
             color="success"
             variant="flat"
-            class="ml-4 rounded-pill px-4"
-            prepend-icon="mdi-circle-medium"
+            :class="mobile ? 'rounded-circle ml-2' : 'rounded-pill px-4 ml-4'"
+            :icon="mobile"
+            :prepend-icon="mobile ? undefined : 'mdi-circle-medium'"
           >
-            مفتوح لاستقبال الطلبات
+            <v-icon v-if="mobile">mdi-circle-medium</v-icon>
+            <span v-else>مفتوح لاستقبال الطلبات</span>
           </v-btn>
         </template>
         <v-list>
@@ -125,22 +132,22 @@
         </v-list>
       </v-menu>
 
-      <!-- Notifications -->
-      <v-btn icon class="ml-2">
+      <!-- Notifications - hide on mobile -->
+      <v-btn v-if="!mobile" icon class="ml-2">
         <v-badge content="3" color="error">
           <v-icon>mdi-bell-outline</v-icon>
         </v-badge>
       </v-btn>
 
       <!-- User Profile -->
-      <v-avatar color="primary" class="ml-4 cursor-pointer">
+      <v-avatar color="primary" :class="mobile ? 'ml-2' : 'ml-4'" class="cursor-pointer">
         <span class="text-h6 text-white">M</span>
       </v-avatar>
     </v-app-bar>
 
     <!-- Main Content -->
     <v-main style="background-color: #F4F7FE; height: 100vh; overflow-y: auto">
-      <v-container fluid class="pa-6">
+      <v-container fluid :class="mobile ? 'pa-3' : 'pa-6'">
         <router-view />
       </v-container>
     </v-main>
@@ -150,9 +157,11 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { useDisplay } from 'vuetify'
 
 const router = useRouter()
 const route = useRoute()
+const { mobile, mdAndUp } = useDisplay()
 
 const drawer = ref(true)
 const rail = ref(false)
@@ -167,6 +176,14 @@ const pageTitle = computed(() => {
     default: return 'لوحة تحكم - المتجر'
   }
 })
+
+function toggleNav() {
+  if (mobile.value) {
+    drawer.value = !drawer.value
+  } else {
+    rail.value = !rail.value
+  }
+}
 
 function logout() {
   localStorage.removeItem('authToken')
