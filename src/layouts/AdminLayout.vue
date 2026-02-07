@@ -270,8 +270,8 @@ const userInitials = computed(() => {
 
 function getPageTitle(path: string): string {
   const titles: Record<string, string> = {
-    admin: 'لوحة التحكم',
-    dashboard: 'الرئيسية',
+    admin: 'الإدارة',
+    dashboard: 'لوحة التحكم',
     orders: 'الطلبات',
     drivers: 'المناديب',
     laundries: 'المغاسل',
