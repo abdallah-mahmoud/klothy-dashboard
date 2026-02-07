@@ -98,5 +98,29 @@
         "receiving": "تأكيد الاستلام",
         "processing": "جاري العمل",
         "ready": "جاهز للتسليم"
+    },
+    "customers": {
+        "title": "إدارة العملاء",
+        "searchPlaceholder": "ابحث برقم الجوال",
+        "customerName": "اسم العميل",
+        "phone": "رقم الجوال",
+        "totalOrders": "إجمالي الطلبات",
+        "wallet": "رصيد المحفظة",
+        "lastOrder": "آخر طلب",
+        "viewDetails": "عرض التفاصيل",
+        "noCustomers": "لا يوجد عملاء",
+        "customerDetails": "تفاصيل العميل",
+        "personalInfo": "المعلومات الشخصية",
+        "email": "البريد الإلكتروني",
+        "location": "الموقع",
+        "walletBalance": "رصيد المحفظة",
+        "ordersHistory": "سجل الطلبات",
+        "transactions": "سجل المحفظة",
+        "noOrders": "لا توجد طلبات",
+        "noTransactions": "لا توجد معاملات",
+        "joinDate": "تاريخ التسجيل",
+        "address": "العنوان",
+        "orderDate": "تاريخ الطلب",
+        "orderStatus": "حالة الطلب"
     }
 }

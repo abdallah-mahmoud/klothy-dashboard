@@ -84,6 +84,7 @@ const routes: RouteRecordRaw[] = [
             { path: '', redirect: 'kanban' },
             { path: 'kanban', name: 'StoreKanban', component: () => import('@/views/store/KanbanView.vue') },
             { path: 'orders', name: 'StoreOrders', component: () => import('@/views/store/OrdersView.vue') },
+            { path: 'customers', name: 'StoreCustomers', component: () => import('@/views/store/CustomersView.vue') },
             // Services route disabled - Klothy controls pricing centrally
             // { path: 'services', name: 'StoreServices', component: () => import('@/views/store/ServicesView.vue') },
             { path: 'financials', name: 'StoreFinancials', component: () => import('@/views/store/FinancialsView.vue') },

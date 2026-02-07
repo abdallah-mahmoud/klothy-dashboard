@@ -44,6 +44,16 @@
         ></v-list-item>
 
         <v-list-item
+          prepend-icon="mdi-account-group"
+          :title="$t('customers.title')"
+          to="/store/customers"
+          rounded="xl"
+          class="mb-1"
+          active-class="bg-primary"
+          :min-height="48"
+        ></v-list-item>
+
+        <v-list-item
           prepend-icon="mdi-cash-multiple"
           :title="$t('financials.title')"
           to="/store/financials"
@@ -195,6 +205,7 @@ const pageTitle = computed(() => {
   switch (route.name) {
     case 'StoreKanban': return 'لوحة تحكم - المتجر'
     case 'StoreOrders': return 'سجل الطلبات'
+    case 'StoreCustomers': return 'إدارة العملاء'
     case 'StoreServices': return 'الخدمات'
     case 'StoreFinancials': return 'التقارير المالية'
     case 'StoreSettings': return 'إعدادات المتجر'

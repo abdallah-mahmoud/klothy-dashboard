@@ -98,5 +98,29 @@
         "receiving": "Confirm Receipt",
         "processing": "Processing",
         "ready": "Ready for Delivery"
+    },
+    "customers": {
+        "title": "Customers Management",
+        "searchPlaceholder": "Search by phone number",
+        "customerName": "Customer Name",
+        "phone": "Phone Number",
+        "totalOrders": "Total Orders",
+        "wallet": "Wallet Balance",
+        "lastOrder": "Last Order",
+        "viewDetails": "View Details",
+        "noCustomers": "No customers found",
+        "customerDetails": "Customer Details",
+        "personalInfo": "Personal Information",
+        "email": "Email",
+        "location": "Location",
+        "walletBalance": "Wallet Balance",
+        "ordersHistory": "Orders History",
+        "transactions": "Wallet Transactions",
+        "noOrders": "No orders",
+        "noTransactions": "No transactions",
+        "joinDate": "Join Date",
+        "address": "Address",
+        "orderDate": "Order Date",
+        "orderStatus": "Order Status"
     }
 }
